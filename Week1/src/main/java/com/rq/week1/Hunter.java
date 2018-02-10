@@ -9,7 +9,7 @@ public class Hunter extends Human {
     public final static int FIRE_BOW = 2;
     public final static int ICE_BOW = 3;
 
-    private Prompter.WeaponType roleType = Prompter.WeaponType.DEFAULT;
+    private Prompter.WeaponType weaponType = Prompter.WeaponType.DEFAULT;
 
     public Hunter() {}
 
@@ -18,12 +18,12 @@ public class Hunter extends Human {
     }
 
     public Hunter(Prompter.WeaponType roleType) {
-        this.roleType = roleType;
+        this.weaponType = roleType;
     }
 
     @Override public void attack() {
         System.out.printf("Hunter %s Attack!%n", getName());
-        switch (roleType) {
+        switch (weaponType) {
             case DEFAULT:
                 System.out.printf("Arrow damage: %d%n", DEFAULT_BOW);
                 break;

@@ -9,7 +9,7 @@ public class Mage extends Human {
     public final static int FIRE_STAFF = 2;
     public final static int ICE_STAFF = 3;
 
-    private Prompter.WeaponType roleType = Prompter.WeaponType.DEFAULT;
+    private Prompter.WeaponType weaponType = Prompter.WeaponType.DEFAULT;
 
     public Mage() {}
 
@@ -18,12 +18,12 @@ public class Mage extends Human {
     }
 
     public Mage(Prompter.WeaponType roleType) {
-        this.roleType = roleType;
+        this.weaponType = roleType;
     }
 
     @Override public void attack() {
         System.out.printf("Mage %s Attack!%n", getName());
-        switch (roleType) {
+        switch (weaponType) {
             case DEFAULT:
                 System.out.printf("Default Staff damage: %d%n", DEFAULT_STAFF);
                 break;

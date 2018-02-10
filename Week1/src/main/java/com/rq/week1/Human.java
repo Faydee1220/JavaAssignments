@@ -1,5 +1,5 @@
 package com.rq.week1;
-import java.util.Scanner;
+import com.rq.week1.Prompter.ChooseType;
 
 import jdk.nashorn.internal.scripts.JO;
 
@@ -13,7 +13,8 @@ public class Human {
         String name = prompter.askName();
 
         Human human = new Human(name);
-        prompter.chooseJob();
+        prompter.choose(ChooseType.JOB); // 選擇職業
+//        prompter.chooseJob();
     }
 
     public Human() {
