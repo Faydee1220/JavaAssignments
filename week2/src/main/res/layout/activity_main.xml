@@ -89,7 +89,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/reset_image_button"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/calculator_reset" />
+                        app:srcCompat="@drawable/reset_selector" />
 
                     <ImageButton
                         android:id="@+id/changeSignButton"
@@ -100,7 +100,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/change_sign_image_button"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/calculator_changesign" />
+                        app:srcCompat="@drawable/change_sign_selector" />
 
                     <ImageButton
                         android:id="@+id/percentButton"
@@ -111,7 +111,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/percent_image_button"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/calculator_percent" />
+                        app:srcCompat="@drawable/percent_selector" />
 
                     <ImageButton
                         android:id="@+id/divideButton"
@@ -139,43 +139,43 @@
 
                     <ImageButton
                         android:id="@+id/number7Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/number_7_image_button"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/calculator_7" />
+                        app:srcCompat="@drawable/number7_selector" />
 
                     <ImageButton
                         android:id="@+id/number8Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/number_8_image_button"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/calculator_8" />
+                        app:srcCompat="@drawable/number8_selector" />
 
                     <ImageButton
                         android:id="@+id/number9Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/number_9_image_button"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/calculator_9" />
+                        app:srcCompat="@drawable/number9_selector" />
 
                     <ImageButton
                         android:id="@+id/timesButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/times_image_button"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/calculator_times" />
+                        app:srcCompat="@drawable/times_selector" />
                 </LinearLayout>
             </RelativeLayout>
 
