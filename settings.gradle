@@ -1,1 +1,1 @@
-include ':app', ':Week1'
+include ':app', ':Week1', ':week2'

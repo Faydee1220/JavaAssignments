@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Week2</string>
+    <string name="input_default_text">3.1415926</string>
+    <string name="total_default_text">3+0.1415926</string>
+</resources>
