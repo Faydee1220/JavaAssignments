@@ -2,4 +2,9 @@
     <string name="app_name">Week2</string>
     <string name="input_default_text">3.1415926</string>
     <string name="total_default_text">3+0.1415926</string>
+    <string name="reset_image_button">Reset image button</string>
+    <string name="change_sign_image_button">Change sign image button</string>
+    <string name="percent_image_button">Percent image button</string>
+    <string name="divede_image_button">Divede image button</string>
+    <string name="number_7_image_button">Number 7 image button</string>
 </resources>

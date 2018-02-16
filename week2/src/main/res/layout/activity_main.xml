@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/darker_gray"
+    android:orientation="vertical"
     tools:context="com.rq.week2.MainActivity">
 
     <LinearLayout
@@ -55,42 +55,67 @@
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:columnCount="4"
-        android:orientation="horizontal"
-        android:rowCount="1">
+        android:background="#333333"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/resetButton"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/calculator_reset" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp">
 
-        <ImageButton
-            android:id="@+id/divideButton"
-            android:adjustViewBounds="true"
-            android:background="@drawable/divide_selector"
-            android:scaleType="fitCenter" />
+            <ImageButton
+                android:id="@+id/resetButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/reset_image_button"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/calculator_reset" />
 
-        <ImageButton
-            android:id="@+id/changeSignButton"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/calculator_changesign" />
+            <ImageButton
+                android:id="@+id/changeSignButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/change_sign_image_button"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/calculator_changesign" />
 
-        <ImageButton
-            android:id="@+id/percentButton"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/calculator_percent" />
+            <ImageButton
+                android:id="@+id/percentButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/percent_image_button"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/calculator_percent" />
 
-    </GridLayout>
+            <ImageButton
+                android:id="@+id/divideButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/divede_image_button"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/divide_selector" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>
