@@ -5,6 +5,20 @@
     <string name="reset_image_button">Reset image button</string>
     <string name="change_sign_image_button">Change sign image button</string>
     <string name="percent_image_button">Percent image button</string>
-    <string name="divede_image_button">Divede image button</string>
+    <string name="divide_image_button">Divide image button</string>
+    <string name="number_0_image_button">Number 0 image button</string>
+    <string name="number_1_image_button">Number 1 image button</string>
+    <string name="number_2_image_button">Number 2 image button</string>
+    <string name="number_3_image_button">Number 3 image button</string>
+    <string name="number_4_image_button">Number 4 image button</string>
+    <string name="number_5_image_button">Number 5 image button</string>
+    <string name="number_6_image_button">Number 6 image button</string>
     <string name="number_7_image_button">Number 7 image button</string>
+    <string name="number_8_image_button">Number 8 image button</string>
+    <string name="number_9_image_button">Number 9 image button</string>
+    <string name="times_image_button">Times image button</string>
+    <string name="minus_image_button">Minus image button</string>
+    <string name="plus_image_button">Plus image button</string>
+    <string name="point_image_string_divide_image_button">Point image @string/divide_image_button</string>
+    <string name="equals_button">Equals button</string>
 </resources>
