@@ -82,46 +82,30 @@
 
                     <ImageButton
                         android:id="@+id/resetButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/reset_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/reset_selector" />
 
                     <ImageButton
                         android:id="@+id/changeSignButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/change_sign_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/change_sign_selector" />
 
                     <ImageButton
                         android:id="@+id/percentButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/percent_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/percent_selector" />
 
                     <ImageButton
                         android:id="@+id/divideButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/divide_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/divide_selector" />
 
                 </LinearLayout>
@@ -139,42 +123,30 @@
 
                     <ImageButton
                         android:id="@+id/number7Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_7_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number7_selector" />
 
                     <ImageButton
                         android:id="@+id/number8Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_8_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number8_selector" />
 
                     <ImageButton
                         android:id="@+id/number9Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_9_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number9_selector" />
 
                     <ImageButton
                         android:id="@+id/timesButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/times_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/times_selector" />
                 </LinearLayout>
             </RelativeLayout>
@@ -191,42 +163,30 @@
 
                     <ImageButton
                         android:id="@+id/number4Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_4_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number4_selector" />
 
                     <ImageButton
                         android:id="@+id/number5Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_5_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number5_selector" />
 
                     <ImageButton
                         android:id="@+id/number6Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_6_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number6_selector" />
 
                     <ImageButton
                         android:id="@+id/minusButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/minus_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/minus_selector" />
                 </LinearLayout>
             </RelativeLayout>
@@ -243,42 +203,30 @@
 
                     <ImageButton
                         android:id="@+id/number1Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_4_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number1_selector" />
 
                     <ImageButton
                         android:id="@+id/number2Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_5_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number2_selector" />
 
                     <ImageButton
                         android:id="@+id/number3Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_6_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number3_selector" />
 
                     <ImageButton
                         android:id="@+id/plusButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/CalculatorButton"
                         android:layout_weight="1"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/plus_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/plus_selector" />
                 </LinearLayout>
             </RelativeLayout>
@@ -295,32 +243,23 @@
 
                     <ImageButton
                         android:id="@+id/number0Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="3"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/number_0_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/number0_selector" />
 
                     <ImageButton
                         android:id="@+id/pointButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="3"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/point_image_string_divide_image_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/point_selector" />
 
                     <ImageButton
                         android:id="@+id/equalsButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/CalculatorButton"
                         android:layout_weight="2"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/equals_button"
-                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/equals_selector" />
                 </LinearLayout>
             </RelativeLayout>
