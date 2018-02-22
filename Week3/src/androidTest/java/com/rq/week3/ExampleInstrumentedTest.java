@@ -1,4 +1,4 @@
-package com.rq.week2;
+package com.rq.week3;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

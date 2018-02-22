@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
     android:orientation="vertical"
-    tools:context="com.rq.week2.MainActivity">
+    tools:context="com.rq.week3.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.rq.week2;
+package com.rq.week3;
 
 import org.junit.Test;
 

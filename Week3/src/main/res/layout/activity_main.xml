@@ -7,7 +7,7 @@
     android:background="@android:color/darker_gray"
     android:orientation="vertical"
     android:weightSum="100"
-    tools:context="com.rq.week2.MainActivity">
+    tools:context="com.rq.week3.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,14 +20,14 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/inputTextView"
+                android:id="@+id/answerTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView"
+                android:layout_below="@+id/expressionTextView"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_toStartOf="@+id/textView"
+                android:layout_toStartOf="@+id/expressionTextView"
                 android:text="@string/input_default_text"
                 android:textAlignment="textEnd"
                 android:textColor="@android:color/white"
@@ -36,10 +36,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/expressionTextView" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/expressionTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -50,7 +50,7 @@
                 android:text="@string/total_default_text"
                 android:textAlignment="textEnd"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/inputTextView"
+                app:layout_constraintBottom_toTopOf="@+id/answerTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,210 +62,186 @@
         android:layout_height="wrap_content"
         android:layout_weight="84"
         android:background="#333333"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="0dp">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="0dp"
+            android:weightSum="100">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageButton
+                android:id="@+id/resetButton"
+                style="@style/CalculatorButton"
+                android:layout_width="wrap_content"
+                android:layout_weight="25"
+                android:contentDescription="@string/reset_image_button"
+                app:srcCompat="@drawable/reset_selector" />
+
+            <ImageButton
+                android:id="@+id/changeSignButton"
+                style="@style/CalculatorButton"
+                android:layout_width="wrap_content"
+                android:layout_weight="25"
+                android:contentDescription="@string/change_sign_image_button"
+                app:srcCompat="@drawable/change_sign_selector" />
+
+            <ImageButton
+                android:id="@+id/percentButton"
+                style="@style/CalculatorButton"
+                android:layout_width="wrap_content"
+                android:layout_weight="25"
+                android:contentDescription="@string/percent_image_button"
+                app:srcCompat="@drawable/percent_selector" />
+
+            <ImageButton
+                android:id="@+id/divideButton"
+                style="@style/CalculatorButton"
+                android:layout_width="wrap_content"
+                android:layout_weight="25"
+                android:contentDescription="@string/divide_image_button"
+                app:srcCompat="@drawable/divide_selector" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/number7Button"
+                style="@style/CalculatorButton"
                 android:layout_weight="1"
-                android:padding="0dp">
+                android:contentDescription="@string/number_7_image_button"
+                app:srcCompat="@drawable/number7_selector" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="0dp">
+            <ImageButton
+                android:id="@+id/number8Button"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/number_8_image_button"
+                app:srcCompat="@drawable/number8_selector" />
 
-                    <ImageButton
-                        android:id="@+id/resetButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/reset_image_button"
-                        app:srcCompat="@drawable/reset_selector" />
+            <ImageButton
+                android:id="@+id/number9Button"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/number_9_image_button"
+                app:srcCompat="@drawable/number9_selector" />
 
-                    <ImageButton
-                        android:id="@+id/changeSignButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/change_sign_image_button"
-                        app:srcCompat="@drawable/change_sign_selector" />
+            <ImageButton
+                android:id="@+id/timesButton"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/times_image_button"
+                app:srcCompat="@drawable/times_selector" />
+        </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/percentButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/percent_image_button"
-                        app:srcCompat="@drawable/percent_selector" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/divideButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/divide_image_button"
-                        app:srcCompat="@drawable/divide_selector" />
+            <ImageButton
+                android:id="@+id/number4Button"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/number_4_image_button"
+                app:srcCompat="@drawable/number4_selector" />
 
-                </LinearLayout>
-            </RelativeLayout>
+            <ImageButton
+                android:id="@+id/number5Button"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/number_5_image_button"
+                app:srcCompat="@drawable/number5_selector" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+            <ImageButton
+                android:id="@+id/number6Button"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/number_6_image_button"
+                app:srcCompat="@drawable/number6_selector" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/minusButton"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/minus_image_button"
+                app:srcCompat="@drawable/minus_selector" />
+        </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/number7Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_7_image_button"
-                        app:srcCompat="@drawable/number7_selector" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/number8Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_8_image_button"
-                        app:srcCompat="@drawable/number8_selector" />
+            <ImageButton
+                android:id="@+id/number1Button"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/number_4_image_button"
+                app:srcCompat="@drawable/number1_selector" />
 
-                    <ImageButton
-                        android:id="@+id/number9Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_9_image_button"
-                        app:srcCompat="@drawable/number9_selector" />
+            <ImageButton
+                android:id="@+id/number2Button"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/number_5_image_button"
+                app:srcCompat="@drawable/number2_selector" />
 
-                    <ImageButton
-                        android:id="@+id/timesButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/times_image_button"
-                        app:srcCompat="@drawable/times_selector" />
-                </LinearLayout>
-            </RelativeLayout>
+            <ImageButton
+                android:id="@+id/number3Button"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/number_6_image_button"
+                app:srcCompat="@drawable/number3_selector" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+            <ImageButton
+                android:id="@+id/plusButton"
+                style="@style/CalculatorButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/plus_image_button"
+                app:srcCompat="@drawable/plus_selector" />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="100">
 
-                    <ImageButton
-                        android:id="@+id/number4Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_4_image_button"
-                        app:srcCompat="@drawable/number4_selector" />
+            <ImageButton
+                android:id="@+id/number0Button"
+                style="@style/CalculatorButton"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:contentDescription="@string/number_0_image_button"
+                app:srcCompat="@drawable/number0_selector" />
 
-                    <ImageButton
-                        android:id="@+id/number5Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_5_image_button"
-                        app:srcCompat="@drawable/number5_selector" />
+            <ImageButton
+                android:id="@+id/pointButton"
+                style="@style/CalculatorButton"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:contentDescription="@string/point_image_string_divide_image_button"
+                app:srcCompat="@drawable/point_selector" />
 
-                    <ImageButton
-                        android:id="@+id/number6Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_6_image_button"
-                        app:srcCompat="@drawable/number6_selector" />
-
-                    <ImageButton
-                        android:id="@+id/minusButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/minus_image_button"
-                        app:srcCompat="@drawable/minus_selector" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/number1Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_4_image_button"
-                        app:srcCompat="@drawable/number1_selector" />
-
-                    <ImageButton
-                        android:id="@+id/number2Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_5_image_button"
-                        app:srcCompat="@drawable/number2_selector" />
-
-                    <ImageButton
-                        android:id="@+id/number3Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/number_6_image_button"
-                        app:srcCompat="@drawable/number3_selector" />
-
-                    <ImageButton
-                        android:id="@+id/plusButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/plus_image_button"
-                        app:srcCompat="@drawable/plus_selector" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/number0Button"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="3"
-                        android:contentDescription="@string/number_0_image_button"
-                        app:srcCompat="@drawable/number0_selector" />
-
-                    <ImageButton
-                        android:id="@+id/pointButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="3"
-                        android:contentDescription="@string/point_image_string_divide_image_button"
-                        app:srcCompat="@drawable/point_selector" />
-
-                    <ImageButton
-                        android:id="@+id/equalsButton"
-                        style="@style/CalculatorButton"
-                        android:layout_weight="2"
-                        android:contentDescription="@string/equals_button"
-                        app:srcCompat="@drawable/equals_selector" />
-                </LinearLayout>
-            </RelativeLayout>
-
+            <ImageButton
+                android:id="@+id/equalsButton"
+                style="@style/CalculatorButton"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:contentDescription="@string/equals_button"
+                app:srcCompat="@drawable/equals_selector" />
         </LinearLayout>
 
     </LinearLayout>
