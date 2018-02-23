@@ -1,19 +1,22 @@
 package com.rq.week3;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+    public final static String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.expressionTextView) TextView expressionTextView;
     @BindView(R.id.answerTextView) TextView answerTextView;
@@ -24,13 +27,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.divideButton) ImageButton divideButton;
 
     private String[] operators = {"+","-","*","/"};
+    List<Double> allNumbers = new ArrayList<>();
+    List<String> allOperators = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
     }
 
     private void addNumber(int number) {
@@ -59,12 +63,28 @@ public class MainActivity extends AppCompatActivity {
         expressionTextView.setText(input);
     }
 
-    private static String removeLastChar(String str) {
+    private void addPoint() {
+        String input = (String) expressionTextView.getText();
+        String last = input.substring(input.length() - 1);
+        // 排除已經輸入 .
+        if (last.equals(".") || input.contains(".")) {
+            return;
+        }
+        input += ".";
+        expressionTextView.setText(input);
+    }
+
+    private String removeLastChar(String str) {
         return str.substring(0, str.length() - 1);
+    }
+
+    private void addition() {
+
     }
 
     @OnClick(R.id.resetButton) void resetButtonPressed() {
         expressionTextView.setText("0");
+        answerTextView.setText("0");
     }
 
     @OnClick(R.id.plusButton) void plusButtonPressed() {
@@ -83,6 +103,128 @@ public class MainActivity extends AppCompatActivity {
         addOperator("/");
     }
 
+    @OnClick(R.id.equalsButton) void equalsButtonPressed() {
+        // 先取得輸入內容
+        String input = (String) expressionTextView.getText();
+
+        // 分隔數字和運算符號變成兩組 Array
+        String[] inputNumbers = getInputNumbers(input);
+        String[] inputOperators = getInputOperators(input);
+
+        // 將 inputNumbers 轉 List
+        getNumberList(inputNumbers);
+
+        // 將 inputOperators 轉 List
+        allOperators = getOperatorList(inputOperators);
+
+        // 1.乘法
+        calculate("*");
+
+        // 2.除法
+        calculate("/");
+
+        // 3.加法
+        calculate("+");
+
+        // 4.減法
+        calculate("-");
+
+        showResult();
+    }
+
+    private void showResult() {
+        double result = allNumbers.get(0);
+        allNumbers.clear();
+        double afterDecimal = result - Math.floor(result);
+//        Log.d(TAG,String.valueOf(afterDecimal));
+        if (afterDecimal == 0) {
+            answerTextView.setText(String.valueOf((int)result));
+        }
+        else {
+            answerTextView.setText(String.valueOf(result));
+        }
+
+        expressionTextView.setText("0");
+    }
+
+    @NonNull
+    private String[] getInputOperators(String input) {
+        // ^ 代表相反
+        // + 代表可以用一個以上來分隔
+//        String[] operators = input.split("[^+|\\-|/|*]+");
+        //        Log.d(TAG, Arrays.toString(inputOperators));
+//        [, +, -, *, /]
+        return input.split("[\\d|.]+");
+    }
+
+    @NonNull
+    private String[] getInputNumbers(String input) {
+        // Example: 0.12+3-4*5/6
+        //        String[] numbers = input.split("[^\\d|.]");
+
+//        Log.d(TAG, Arrays.toString(inputNumbers));
+//        [0.12, 3, 4, 5, 6]
+        return input.split("[+|\\-|*|/]");
+    }
+
+    private void getNumberList(String[] inputNumbers) {
+        List<String> numbers = new ArrayList<>(Arrays.asList(inputNumbers));
+        for (String number : numbers) {
+            allNumbers.add(Double.parseDouble(number));
+        }
+//        Log.d(TAG,String.valueOf(allNumbers));
+    }
+
+    @NonNull
+    private List<String> getOperatorList(String[] inputOperators) {
+        List<String> allOperators = new ArrayList<>(Arrays.asList(inputOperators));
+        allOperators.remove(0);
+//        Log.d(TAG,String.valueOf(allOperators));
+        return allOperators;
+    }
+
+    private void calculate(String operator) {
+        List<Integer> indexsNeedRemove = new ArrayList<>();
+        do {
+            for (int i = 0; i < allOperators.size(); i += 1) {
+                if (allOperators.get(i).equals(operator)) {
+                    double result = 0.0;
+                    switch (operator) {
+                        case "*":
+                            result = allNumbers.get(i) * allNumbers.get(i + 1);
+                            break;
+                        case "/":
+                            result = allNumbers.get(i) / allNumbers.get(i + 1);
+                            break;
+                        case "+":
+                            result = allNumbers.get(i) + allNumbers.get(i + 1);
+                            break;
+                        case "-":
+                            result = allNumbers.get(i) - allNumbers.get(i + 1);
+                            break;
+                    }
+                    allNumbers.set(i, result);
+                    allNumbers.remove(i + 1);
+                    indexsNeedRemove.add(i);
+                    break;
+                }
+            }
+
+            for (Integer index : indexsNeedRemove) {
+                allOperators.remove((int)index);
+            }
+
+            Log.d(TAG,String.valueOf(allNumbers));
+            Log.d(TAG,String.valueOf(allOperators));
+            indexsNeedRemove.clear();
+        } while (allOperators.contains(operator));
+    }
+
+    @OnClick(R.id.pointButton) void pointButtonPressed() {
+        addPoint();
+    }
+
+    //region Action - Press number
     @OnClick(R.id.number0Button) void number0ButtonPressed() {
         addNumber(0);
     }
@@ -122,4 +264,5 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.number9Button) void number9ButtonPressed() {
         addNumber(9);
     }
+    //endregion
 }
