@@ -1,11 +1,13 @@
 package com.rq.week3;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,6 +108,16 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.equalsButton) void equalsButtonPressed() {
         // 先取得輸入內容
         String input = (String) expressionTextView.getText();
+
+        // 提示最後輸入必須為數字
+        String last = input.substring(input.length() - 1);
+        try {
+            int lastInt = Integer.parseInt(last);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this,"請輸入數字",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         // 分隔數字和運算符號變成兩組 Array
         String[] inputNumbers = getInputNumbers(input);
@@ -265,4 +277,16 @@ public class MainActivity extends AppCompatActivity {
         addNumber(9);
     }
     //endregion
+
+    @OnClick(R.id.changeSignButton) void changeSignButtonPressed() {
+        showDevelopingToast();
+    }
+
+    @OnClick(R.id.percentButton) void percentButton() {
+        showDevelopingToast();
+    }
+
+    private void showDevelopingToast() {
+        Toast.makeText(this,"此功能開發中",Toast.LENGTH_SHORT).show();
+    }
 }
