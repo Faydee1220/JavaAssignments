@@ -109,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
         // 先取得輸入內容
         String input = (String) expressionTextView.getText();
 
+        if (input.equals("0")) {
+            return;
+        }
+
         // 提示最後輸入必須為數字
         String last = input.substring(input.length() - 1);
         try {
@@ -117,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"請輸入數字",Toast.LENGTH_SHORT).show();
             return;
         }
-
 
         // 分隔數字和運算符號變成兩組 Array
         String[] inputNumbers = getInputNumbers(input);
