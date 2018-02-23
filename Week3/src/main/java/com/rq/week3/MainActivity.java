@@ -80,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
         return str.substring(0, str.length() - 1);
     }
 
-    private void addition() {
-
-    }
-
     @OnClick(R.id.resetButton) void resetButtonPressed() {
         expressionTextView.setText("0");
         answerTextView.setText("0");
@@ -128,6 +124,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 將 inputNumbers 轉 List
         getNumberList(inputNumbers);
+
+        // 如果沒有輸入任何運算符號時，直接顯示結果
+        if (inputOperators.length == 0) {
+            showResult();
+            return;
+        }
 
         // 將 inputOperators 轉 List
         allOperators = getOperatorList(inputOperators);
