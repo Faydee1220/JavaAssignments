@@ -39,6 +39,7 @@ import com.example.android.sunshine.sync.SunshineSyncUtils;
 
 import java.util.Collections;
 
+import static com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_SORT_ORDER;
 import static com.example.android.sunshine.data.WeatherContract.WeatherEntry.CONTENT_URI;
 
 public class MainActivity extends AppCompatActivity implements
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity implements
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
-            WeatherContract.WeatherEntry._ID
+            WeatherContract.WeatherEntry._ID,
+            COLUMN_SORT_ORDER,
     };
 
     /*
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements
     public static final int INDEX_WEATHER_MIN_TEMP = 2;
     public static final int INDEX_WEATHER_CONDITION_ID = 3;
     public static final int INDEX_WEATHER_ID = 4;
+    public static final int INDEX_WEATHER_SORT_ORDER = 5;
 
 
 
@@ -149,9 +152,24 @@ public class MainActivity extends AppCompatActivity implements
         /* Setting the adapter attaches it to the RecyclerView in our layout. */
         mRecyclerView.setAdapter(mForecastAdapter);
 
+        showLoading();
+
+        /*
+         * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
+         * created and (if the activity/fragment is currently started) starts the loader. Otherwise
+         * the last created loader is re-used.
+         */
+        getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
+
+        SunshineSyncUtils.initialize(this);
+
+        // 設定滑動刪除與拖曳位置
+        setSwipeAndDrag();
+    }
+
+    private void setSwipeAndDrag() {
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper
-                .SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
+                .SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
                 ItemTouchHelper.START | ItemTouchHelper.END
         ) {
             @Override
@@ -160,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements
 
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
+
+
+
 //                if (fromPosition < toPosition) {
 //                    for (int i = fromPosition; i < toPosition; i++) {
 //                        Collections.swap(mDatas, i, i + 1);
@@ -170,7 +191,9 @@ public class MainActivity extends AppCompatActivity implements
 //                    }
 //                }
 //                mForecastAdapter.notifyItemMoved(fromPosition, toPosition);
-                return true;
+
+                // 等更新排序完成再打開拖曳 true
+                return false;
             }
 
             @Override
@@ -178,7 +201,8 @@ public class MainActivity extends AppCompatActivity implements
 //                int id = (int) viewHolder.itemView.getTag();
 //                String idString = Integer.toString(id);
 
-                long date = (long) viewHolder.itemView.getTag();
+                // 測試改用日期當 tag 並取用
+                long date = (long) viewHolder.itemView.getTag(R.id.date);
                 String dateString = String.valueOf(date);
 
                 Uri uri = CONTENT_URI;
@@ -192,18 +216,6 @@ public class MainActivity extends AppCompatActivity implements
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
-
-        showLoading();
-
-        /*
-         * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
-         * created and (if the activity/fragment is currently started) starts the loader. Otherwise
-         * the last created loader is re-used.
-         */
-        getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
-
-        SunshineSyncUtils.initialize(this);
-
     }
 
     /**

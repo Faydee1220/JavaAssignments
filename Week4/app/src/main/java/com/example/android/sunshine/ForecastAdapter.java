@@ -29,7 +29,9 @@ import com.example.android.sunshine.data.WeatherContract;
 import com.example.android.sunshine.utilities.SunshineDateUtils;
 import com.example.android.sunshine.utilities.SunshineWeatherUtils;
 
+import static com.example.android.sunshine.MainActivity.INDEX_WEATHER_DATE;
 import static com.example.android.sunshine.MainActivity.INDEX_WEATHER_ID;
+import static com.example.android.sunshine.MainActivity.INDEX_WEATHER_SORT_ORDER;
 
 /**
  * {@link ForecastAdapter} exposes a list of weather forecasts
@@ -171,15 +173,19 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
          * Weather Date *
          ****************/
          /* Read date from the cursor */
-        long dateInMillis = mCursor.getLong(MainActivity.INDEX_WEATHER_DATE);
+        long dateInMillis = mCursor.getLong(INDEX_WEATHER_DATE);
          /* Get human readable string using our utility method */
         String dateString = SunshineDateUtils.getFriendlyDateString(mContext, dateInMillis, false);
 
          /* Display friendly date string */
         forecastAdapterViewHolder.dateView.setText(dateString);
 
-        // setTag with date
-        forecastAdapterViewHolder.itemView.setTag(dateInMillis);
+        // 新增日期的 tag
+        forecastAdapterViewHolder.itemView.setTag(R.id.date, dateInMillis);
+
+        // 新增排序的 tag
+        int sortOrder = mCursor.getInt(INDEX_WEATHER_SORT_ORDER);
+        forecastAdapterViewHolder.itemView.setTag(R.id.sort_order, sortOrder);
 
         /***********************
          * Weather Description *
@@ -308,7 +314,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             mCursor.moveToPosition(adapterPosition);
-            long dateInMillis = mCursor.getLong(MainActivity.INDEX_WEATHER_DATE);
+            long dateInMillis = mCursor.getLong(INDEX_WEATHER_DATE);
             mClickHandler.onClick(dateInMillis);
         }
     }

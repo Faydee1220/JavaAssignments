@@ -55,6 +55,7 @@ public class WeatherContract {
      * "givemeroot". At least, let's hope not. Don't be that dev, reader. Don't be that dev.
      */
     public static final String PATH_WEATHER = "weather";
+    public static final String PATH_SORT_ORDER = "sort_order";
 
     /* Inner class that defines the table contents of the weather table */
     public static final class WeatherEntry implements BaseColumns {
@@ -109,6 +110,7 @@ public class WeatherContract {
          */
         public static final String COLUMN_DEGREES = "degrees";
 
+        // 新增排序用
         public static final String COLUMN_SORT_ORDER = "sort_order";
 
         /**

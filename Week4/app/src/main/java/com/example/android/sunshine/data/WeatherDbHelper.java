@@ -86,6 +86,9 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                 WeatherEntry.COLUMN_WIND_SPEED + " REAL NOT NULL, "                    +
                 WeatherEntry.COLUMN_DEGREES    + " REAL NOT NULL, "                    +
 
+                        // 新增排序用欄位
+                        WeatherEntry.COLUMN_SORT_ORDER + " INTEGER NOT NULL,"                  +
+
                 /*
                  * To ensure this table can only contain one weather entry per date, we declare
                  * the date column to be unique. We also specify "ON CONFLICT REPLACE". This tells

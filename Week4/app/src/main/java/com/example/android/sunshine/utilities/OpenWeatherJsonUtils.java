@@ -27,6 +27,8 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 
+import static com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_SORT_ORDER;
+
 /**
  * Utility functions to handle OpenWeatherMap JSON data.
  */
@@ -175,6 +177,8 @@ public final class OpenWeatherJsonUtils {
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, high);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP, low);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID, weatherId);
+            // 新增排序用的值
+            weatherValues.put(COLUMN_SORT_ORDER, i);
 
             weatherContentValues[i] = weatherValues;
         }

@@ -26,6 +26,9 @@ import android.support.annotation.NonNull;
 
 import com.example.android.sunshine.utilities.SunshineDateUtils;
 
+import static com.example.android.sunshine.data.WeatherContract.PATH_SORT_ORDER;
+import static com.example.android.sunshine.data.WeatherContract.WeatherEntry.TABLE_NAME;
+
 /**
  * This class serves as the ContentProvider for all of Sunshine's data. This class allows us to
  * bulkInsert data, query data, and delete data.
@@ -46,6 +49,7 @@ public class WeatherProvider extends ContentProvider {
     public static final int CODE_WEATHER = 100;
     public static final int CODE_WEATHER_WITH_DATE = 101;
     public static final int CODE_WEATHER_WITH_ID = 102;
+    public static final int CODE_WEATHER_WITH_SORT_ORDER = 103;
 
     /*
      * The URI Matcher used by this content provider. The leading "s" in this variable name
@@ -100,6 +104,9 @@ public class WeatherProvider extends ContentProvider {
 
         // 有問題，和上方重複了
 //        matcher.addURI(authority, WeatherContract.PATH_WEATHER + "/#", CODE_WEATHER_WITH_ID);
+
+        // 排序
+        matcher.addURI(authority, WeatherContract.PATH_WEATHER + "/" +PATH_SORT_ORDER, CODE_WEATHER_WITH_SORT_ORDER);
 
         return matcher;
     }
@@ -160,7 +167,7 @@ public class WeatherProvider extends ContentProvider {
                             throw new IllegalArgumentException("Date must be normalized to insert");
                         }
 
-                        long _id = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, value);
+                        long _id = db.insert(TABLE_NAME, null, value);
                         if (_id != -1) {
                             rowsInserted++;
                         }
@@ -240,7 +247,7 @@ public class WeatherProvider extends ContentProvider {
 
                 cursor = mOpenHelper.getReadableDatabase().query(
                         /* Table we are going to query */
-                        WeatherContract.WeatherEntry.TABLE_NAME,
+                        TABLE_NAME,
                         /*
                          * A projection designates the columns we want returned in our Cursor.
                          * Passing null will return all columns of data within the Cursor.
@@ -279,7 +286,7 @@ public class WeatherProvider extends ContentProvider {
              */
             case CODE_WEATHER: {
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        WeatherContract.WeatherEntry.TABLE_NAME,
+                        TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -325,7 +332,7 @@ public class WeatherProvider extends ContentProvider {
 
             case CODE_WEATHER:
                 numRowsDeleted = mOpenHelper.getWritableDatabase().delete(
-                        WeatherContract.WeatherEntry.TABLE_NAME,
+                        TABLE_NAME,
                         selection,
                         selectionArgs);
 
@@ -339,7 +346,7 @@ public class WeatherProvider extends ContentProvider {
 
                 String date = uri.getPathSegments().get(1);
                 numRowsDeleted = mOpenHelper.getWritableDatabase()
-                        .delete(WeatherContract.WeatherEntry.TABLE_NAME, "date=?", new String[]{date});
+                        .delete(TABLE_NAME, "date=?", new String[]{date});
 
                 break;
             default:
@@ -388,7 +395,30 @@ public class WeatherProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        throw new RuntimeException("We are not implementing update in Sunshine");
+        //Keep track of if an update occurs
+        int tasksUpdated;
+
+        // match code
+        int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case CODE_WEATHER_WITH_ID:
+                //update a single task by getting the id
+                String id = uri.getPathSegments().get(1);
+                //using selections
+                tasksUpdated = mOpenHelper.getWritableDatabase().update(TABLE_NAME, values, "_id=?", new String[]{id});
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        if (tasksUpdated != 0) {
+            //set notifications if a task was updated
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        // return number of tasks updated
+        return tasksUpdated;
     }
 
     /**
