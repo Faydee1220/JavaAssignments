@@ -56,6 +56,7 @@ public class WeatherContract {
      */
     public static final String PATH_WEATHER = "weather";
     public static final String PATH_SORT_ORDER = "sort_order";
+    public static final String PATH_ID = "id";
 
     /* Inner class that defines the table contents of the weather table */
     public static final class WeatherEntry implements BaseColumns {

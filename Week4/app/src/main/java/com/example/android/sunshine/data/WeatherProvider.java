@@ -26,6 +26,7 @@ import android.support.annotation.NonNull;
 
 import com.example.android.sunshine.utilities.SunshineDateUtils;
 
+import static com.example.android.sunshine.data.WeatherContract.PATH_ID;
 import static com.example.android.sunshine.data.WeatherContract.PATH_SORT_ORDER;
 import static com.example.android.sunshine.data.WeatherContract.WeatherEntry.TABLE_NAME;
 
@@ -102,11 +103,19 @@ public class WeatherProvider extends ContentProvider {
          */
         matcher.addURI(authority, WeatherContract.PATH_WEATHER + "/#", CODE_WEATHER_WITH_DATE);
 
-        // 有問題，和上方重複了
-//        matcher.addURI(authority, WeatherContract.PATH_WEATHER + "/#", CODE_WEATHER_WITH_ID);
-
         // 排序
-        matcher.addURI(authority, WeatherContract.PATH_WEATHER + "/" +PATH_SORT_ORDER, CODE_WEATHER_WITH_SORT_ORDER);
+        matcher.addURI(authority, WeatherContract.PATH_WEATHER +
+                "/" +
+                PATH_SORT_ORDER +
+                "/#",
+                CODE_WEATHER_WITH_SORT_ORDER);
+
+        // 有 id 的情況
+        matcher.addURI(authority, WeatherContract.PATH_WEATHER +
+                "/" +
+                PATH_ID +
+                "/#",
+                CODE_WEATHER_WITH_ID);
 
         return matcher;
     }
@@ -338,16 +347,15 @@ public class WeatherProvider extends ContentProvider {
 
                 break;
             case CODE_WEATHER_WITH_DATE:
-//            case CODE_WEATHER_WITH_ID:
-//                String id = uri.getPathSegments().get(1);
-//                // Use selections/selectionArgs to filter for this ID
-//                numRowsDeleted = mOpenHelper.getWritableDatabase()
-//                        .delete(WeatherContract.WeatherEntry.TABLE_NAME, "_id=?", new String[]{id});
-
                 String date = uri.getPathSegments().get(1);
                 numRowsDeleted = mOpenHelper.getWritableDatabase()
                         .delete(TABLE_NAME, "date=?", new String[]{date});
-
+                break;
+            case CODE_WEATHER_WITH_ID:
+                String id = uri.getPathSegments().get(2);
+                // Use selections/selectionArgs to filter for this ID
+                numRowsDeleted = mOpenHelper.getWritableDatabase()
+                        .delete(WeatherContract.WeatherEntry.TABLE_NAME, "_id=?", new String[]{id});
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -404,7 +412,7 @@ public class WeatherProvider extends ContentProvider {
         switch (match) {
             case CODE_WEATHER_WITH_ID:
                 //update a single task by getting the id
-                String id = uri.getPathSegments().get(1);
+                String id = uri.getPathSegments().get(2);
                 //using selections
                 tasksUpdated = mOpenHelper.getWritableDatabase().update(TABLE_NAME, values, "_id=?", new String[]{id});
                 break;

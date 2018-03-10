@@ -246,5 +246,5 @@
 
     <item type="id" name="date" />
     <item type="id" name="sort_order" />
-
+    <item type="id" name="primary_key" />
 </resources>

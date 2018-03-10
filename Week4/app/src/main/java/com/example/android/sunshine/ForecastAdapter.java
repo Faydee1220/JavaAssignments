@@ -133,14 +133,6 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      */
     @Override
     public void onBindViewHolder(ForecastAdapterViewHolder forecastAdapterViewHolder, int position) {
-        // setTag with id
-//        if(mCursor != null && mCursor.moveToFirst()){
-////            int idIndex = mCursor.getColumnIndex(WeatherContract.WeatherEntry._ID);
-////            final int id = mCursor.getInt(idIndex);
-//            final int id = mCursor.getInt(INDEX_WEATHER_ID);
-//            forecastAdapterViewHolder.itemView.setTag(id);
-//        }
-
         mCursor.moveToPosition(position);
 
         /****************
@@ -186,6 +178,17 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         // 新增排序的 tag
         int sortOrder = mCursor.getInt(INDEX_WEATHER_SORT_ORDER);
         forecastAdapterViewHolder.itemView.setTag(R.id.sort_order, sortOrder);
+
+        // 新增 id 的 tag
+        int id = mCursor.getInt(INDEX_WEATHER_ID);
+        forecastAdapterViewHolder.itemView.setTag(R.id.primary_key, id);
+        // setTag with id
+//        if(mCursor != null && mCursor.moveToFirst()){
+////            int idIndex = mCursor.getColumnIndex(WeatherContract.WeatherEntry._ID);
+////            final int id = mCursor.getInt(idIndex);
+//            final int id = mCursor.getInt(INDEX_WEATHER_ID);
+//            forecastAdapterViewHolder.itemView.setTag(id);
+//        }
 
         /***********************
          * Weather Description *

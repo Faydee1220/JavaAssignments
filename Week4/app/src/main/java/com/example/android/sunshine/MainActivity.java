@@ -15,6 +15,8 @@
  */
 package com.example.android.sunshine;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -39,6 +41,7 @@ import com.example.android.sunshine.sync.SunshineSyncUtils;
 
 import java.util.Collections;
 
+import static com.example.android.sunshine.data.WeatherContract.PATH_ID;
 import static com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_SORT_ORDER;
 import static com.example.android.sunshine.data.WeatherContract.WeatherEntry.CONTENT_URI;
 
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements
      * it is unique and consistent.
      */
     private static final int ID_FORECAST_LOADER = 44;
+    private static final int ID_FORECAST_LOADER_SORT_ORDER = 45;
 
     private ForecastAdapter mForecastAdapter;
     private RecyclerView mRecyclerView;
@@ -159,7 +163,8 @@ public class MainActivity extends AppCompatActivity implements
          * created and (if the activity/fragment is currently started) starts the loader. Otherwise
          * the last created loader is re-used.
          */
-        getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
+//        getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
+        getSupportLoaderManager().initLoader(ID_FORECAST_LOADER_SORT_ORDER, null, this);
 
         SunshineSyncUtils.initialize(this);
 
@@ -168,49 +173,94 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void setSwipeAndDrag() {
-        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper
-                .SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+
+        ItemTouchHelper.Callback callback = new ItemTouchHelper
+                .SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
                 ItemTouchHelper.START | ItemTouchHelper.END
         ) {
+            int dragFrom = -1;
+            int dragTo = -1;
+            int fromId = -1;
+            int toId = -1;
+
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
                                   RecyclerView.ViewHolder target) {
-
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
 
+                if(dragFrom == -1) {
+                    dragFrom =  fromPosition;
+                }
+                dragTo = toPosition;
 
+                // 取得各自的 id
+                fromId = (int) viewHolder.itemView.getTag(R.id.primary_key);
+                String fromIdString = Integer.toString(fromId);
 
-//                if (fromPosition < toPosition) {
-//                    for (int i = fromPosition; i < toPosition; i++) {
-//                        Collections.swap(mDatas, i, i + 1);
-//                    }
-//                } else {
-//                    for (int i = fromPosition; i > toPosition; i--) {
-//                        Collections.swap(mDatas, i, i - 1);
-//                    }
-//                }
-//                mForecastAdapter.notifyItemMoved(fromPosition, toPosition);
+                toId = (int) target.itemView.getTag(R.id.primary_key);
+                String toIdString = Integer.toString(toId);
 
-                // 等更新排序完成再打開拖曳 true
-                return false;
+                return true;
             }
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-//                int id = (int) viewHolder.itemView.getTag();
-//                String idString = Integer.toString(id);
-
-                // 測試改用日期當 tag 並取用
-                long date = (long) viewHolder.itemView.getTag(R.id.date);
-                String dateString = String.valueOf(date);
+                // 利用設定在 tag 中的 id 來刪除
+                int id = (int) viewHolder.itemView.getTag(R.id.primary_key);
+                String idString = Integer.toString(id);
 
                 Uri uri = CONTENT_URI;
-//                uri = uri.buildUpon().appendPath(idString).build();
-                uri = uri.buildUpon().appendPath(dateString).build();
+                uri = uri.buildUpon()
+                        .appendPath(PATH_ID)
+                        .appendPath(idString)
+                        .build();
 
                 getContentResolver().delete(uri, null, null);
                 getSupportLoaderManager().restartLoader(ID_FORECAST_LOADER, null, MainActivity.this);
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                if(dragFrom != -1 && dragTo != -1 && dragFrom != dragTo
+                        && fromId != -1 && toId != -1) {
+                    reallyMoved(dragFrom, dragTo);
+                }
+
+                dragFrom = dragTo = fromId = toId = -1;
+            }
+
+            private void reallyMoved(int fromPosition, int toPosition) {
+//                int fromPosition = viewHolder.getAdapterPosition();
+//                int toPosition = target.getAdapterPosition();
+
+                // 取得各自的 id
+//                int fromId = (int) viewHolder.itemView.getTag(R.id.primary_key);
+                String fromIdString = Integer.toString(fromId);
+
+//                int toId = (int) target.itemView.getTag(R.id.primary_key);
+                String toIdString = Integer.toString(toId);
+
+                // 更新各自的 sort_order 欄位
+                Uri fromUri = CONTENT_URI;
+                fromUri = fromUri.buildUpon()
+                        .appendPath(PATH_ID)
+                        .appendPath(fromIdString)
+                        .build();
+                ContentValues fromContentValues = new ContentValues();
+                fromContentValues.put(COLUMN_SORT_ORDER, toPosition);
+                getContentResolver().update(fromUri, fromContentValues, null, null);
+
+                Uri toUri = CONTENT_URI;
+                toUri = toUri.buildUpon()
+                        .appendPath(PATH_ID)
+                        .appendPath(toIdString)
+                        .build();
+                ContentValues toContentValues = new ContentValues();
+                toContentValues.put(COLUMN_SORT_ORDER, fromPosition);
+                getContentResolver().update(toUri, toContentValues, null, null);
             }
         };
 
@@ -256,12 +306,13 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 
-
+        Uri forecastQueryUri = CONTENT_URI;
+        String selection = WeatherContract.WeatherEntry.getSqlSelectForTodayOnwards();
         switch (loaderId) {
 
             case ID_FORECAST_LOADER:
                 /* URI for all rows of weather data in our weather table */
-                Uri forecastQueryUri = CONTENT_URI;
+//                Uri forecastQueryUri = CONTENT_URI;
                 /* Sort order: Ascending by date */
                 String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
                 /*
@@ -269,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements
                  * want all weather data from today onwards that is stored in our weather table.
                  * We created a handy method to do that in our WeatherEntry class.
                  */
-                String selection = WeatherContract.WeatherEntry.getSqlSelectForTodayOnwards();
+//                String selection = WeatherContract.WeatherEntry.getSqlSelectForTodayOnwards();
 
                 return new CursorLoader(this,
                         forecastQueryUri,
@@ -277,7 +328,15 @@ public class MainActivity extends AppCompatActivity implements
                         selection,
                         null,
                         sortOrder);
+            case ID_FORECAST_LOADER_SORT_ORDER:
+                String sortOrder2 = WeatherContract.WeatherEntry.COLUMN_SORT_ORDER + " ASC";
 
+                return new CursorLoader(this,
+                        forecastQueryUri,
+                        MAIN_FORECAST_PROJECTION,
+                        selection,
+                        null,
+                        sortOrder2);
             default:
                 throw new RuntimeException("Loader Not Implemented: " + loaderId);
         }
@@ -296,11 +355,10 @@ public class MainActivity extends AppCompatActivity implements
      */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-
         mForecastAdapter.swapCursor(data);
-        if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
-        mRecyclerView.smoothScrollToPosition(mPosition);
+        // 避免拖曳後更新時自動滾到最上方，先註解此段
+//        if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
+//        mRecyclerView.smoothScrollToPosition(mPosition);
         if (data.getCount() != 0) showWeatherDataView();
     }
 
